@@ -1,4 +1,4 @@
-objects=bfc.o program.o util.o
+objects=src/bfc.o src/program.o src/util.o
 
 bfc: $(objects)
 	gcc -o bfc $(objects)
