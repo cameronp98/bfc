@@ -9,10 +9,17 @@ As an example, the brainfuck code:
 ```
 would be converted into its equivalent in NASM assembly:
 ```nasm
-; ...
-mov byte ax,8
-div 3
-mov byte [ebx],ah
-call putb ; output one byte
+.section .bss:
+	buffer resb 32768 ; 32kB of tape/memory
+
+section .text:
+global _start
+_start:
+	mov ebx,buffer
+
+	mov byte ax,8
+	div 3
+	mov byte [ebx],ah
+	call putb ; output one byte
 ; ...
 ```
