@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stddef.h>
 
-typedef struct operation_t
+typedef struct
 {
 	char type;
 	int data;
@@ -12,11 +12,11 @@ typedef struct operation_t
 
 typedef struct
 {
-	Operation **data;
+	Operation *data;
 	size_t size;
 } Program;
 
-typedef Operation *(ReduceCallback)(Operation **ops);
+typedef Operation (ReduceCallback)(Operation *ops);
 
 Operation *Operation_new(char type, int data);
 

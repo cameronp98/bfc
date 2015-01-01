@@ -13,21 +13,18 @@
 size_t bfc_stack_size = STK_MIN;
 size_t bfc_buffer_size = BUF_MIN;
 
-Operation *reduce_remainder(Operation **ops)
+Operation reduce_remainder(Operation *ops)
 {
 	// "[-]" -> calculate remainder from division by number of '-'s
-	return  Operation_new('%', ops[1]->data);
+	Operation op = {'%', ops[1].data};
+	return op;
 }
 
 int main(int argc, char **argv)
 {
 
 	if (argc < 2)
-		die("usage: bfc <input-file> [s]");
-
-	FILE *fp = fopen(argv[1], "r");
-	if (fp == NULL)
-		die("failed to open input file");
+		die("usage: bfc <input-file> [sb]");
 
 	char c;
 	while ((c = getopt(argc, argv, "s:b:")) != -1)
@@ -46,15 +43,17 @@ int main(int argc, char **argv)
 		}
 	}
 
+	FILE *fp = fopen(argv[1], "r");
+	if (fp == NULL)
+		die("failed to open input file");
+
 	Program *p = Program_fromFile(fp);
 
 	Program_reduce(p, "[-]", reduce_remainder);
 
-	int i;
-	for (i = 0; i < p->size; i++)
+	for (int i = 0; i < p->size; i++)
 	{
-		Operation *op = p->data[i];
-		printf("%c %d\n", op->type, op->data);
+		printf("%c %d\n", p->data[i].type, p->data[i].data);
 	}
 
 	Program_free(p);

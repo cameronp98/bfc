@@ -1,8 +1,24 @@
-objects=src/bfc.o src/program.o src/util.o
+TARGET = bfc
 
-bfc: $(objects)
-	gcc -o bfc $(objects)
+SRCDIR=src
+OBJDIR=obj
+BINDIR=bin
 
-.PHONY: clean
+CC=gcc
+
+CFLAGS = -std=c99 -Wall -g -I $(SRCDIR)
+LFLAGS = -Wall
+
+SOURCES = $(wildcard $(SRCDIR)/*.c)
+OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SOURCES))
+
+$(BINDIR)/$(TARGET): $(OBJECTS)
+	$(CC) $(LFLAGS) -o $@ $^
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+PHONY: clean
 clean:
-	rm bfc $(objects)
+	rm bin/$(TARGET)
+	rm $(OBJECTS)

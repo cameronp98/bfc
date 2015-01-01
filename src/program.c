@@ -1,4 +1,4 @@
-#include "error.h"
+#include "util.h"
 #include "program.h"
 
 #include <stdio.h>
@@ -17,11 +17,10 @@ static Program *Program_new(void)
 	return p;
 }
 
-
 static void Program_put(Program *p, char type, int data)
 {
 
-	Operation *op = Operation_new(type, data);
+	Operation op = {type, data};
 
 	if (p->size == 0)
 	{
@@ -34,16 +33,6 @@ static void Program_put(Program *p, char type, int data)
 
 	p->size++;
 
-}
-
-Operation *Operation_new(char type, int data)
-{
-	Operation *op = malloc(sizeof *op);
-	if (op == NULL)
-		die("Operation_new(): memory error");
-	op->type = type;
-	op->data = data;
-	return op;
 }
 
 Program *Program_fromFile(FILE *fp)
@@ -120,20 +109,17 @@ void Program_reduce(Program *p, char *pattern, ReduceCallback *cb)
 {
 
 	const size_t pat_len = strlen(pattern);
-	// last valid search index
-	size_t max_idx = p->size - (pat_len - 1);
-
 
 	/* TODO: find a better algorithm! */
 	// identify all instances of substring `pattern` and replace them in the
 	//  program with the replacement specified by the callback
 	int i, j;
-	for (i = 0; i < max_idx; i++)
+	for (i = 0; i < p->size; i++)
 	{
 		int match = 1;
 		for (j = 0; j < pat_len; j++)
 		{
-			if (p->data[i+j]->type != pattern[j]) {
+			if (p->data[i+j].type != pattern[j]) {
 				match = 0;
 				break;
 			}
@@ -141,24 +127,17 @@ void Program_reduce(Program *p, char *pattern, ReduceCallback *cb)
 
 		if (match)
 		{
-			int k;
-
 			// replace the sequence in the program with the result from cb
 			p->data[i] = (*cb)(p->data+i);
 
-			for (k = 1; k < p->size - i; k++) {
-				p->data[i+k] = p->data[i+k+pat_len];
-			}
+			// fill in the blank space (shift the program left)
+			memcpy(p->data+i, p->data+i+pat_len, p->size - (i + 1));
 
-			// recalculate the last valid search index +  new program size
-			p->size = max_idx - 1;
-			max_idx -= pat_len - 1;
+			p->size -= (pat_len - 1);
 
-			// resize
 			p->data = realloc(p->data, p->size * sizeof(*p->data));
 			if (p->data == NULL)
 				die("Program_reduce(): memory error");
-
 		}
 	}
 
