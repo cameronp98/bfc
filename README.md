@@ -1,6 +1,18 @@
-BFC - A toy brainfuck compiler
+bfc
 ===
 
-usage: bfc <input-file> [bs]
-	-b: set buffer size (16384 to 65535)
-	-s: set loop stack size (16 to 64)
+bfc is a slightly optimising brainfuck compiler
+
+As an example:
+```brainfuck
+++++++++[---].
+```
+would be optimised to:
+```nasm
+; ...
+mov byte ax,8
+div 3
+mov byte [ebx],ah
+call putb
+; ...
+```
