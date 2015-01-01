@@ -21,5 +21,9 @@ _start:
 	div 3
 	mov byte [ebx],ah
 	call putb ; output one byte
-; ...
+
+	; return 0
+	mov eax,1
+	xor ebx, ebx
+	int 80h
 ```
