@@ -2,23 +2,29 @@ TARGET = bfc
 
 SRCDIR=src
 OBJDIR=obj
-BINDIR=bin
 
 CC=gcc
 
-CFLAGS = -std=c99 -Wall -g -I $(SRCDIR)
+CFLAGS = -O -std=c99 -Wall -g -I $(SRCDIR)
 LFLAGS = -Wall
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SOURCES))
 
-$(BINDIR)/$(TARGET): $(OBJECTS)
+$(TARGET): $(OBJECTS)
 	$(CC) $(LFLAGS) -o $@ $^
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-PHONY: clean
+PHONY: clean install uninstall
+
 clean:
-	rm bin/$(TARGET)
+	rm $(TARGET)
 	rm $(OBJECTS)
+
+install:
+	install -m 775 $(TARGET) /usr/local/bin
+
+uninstall:
+	rm -rf /usr/loal/bin/$(TARGET)
