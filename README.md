@@ -1,16 +1,13 @@
-bfc
-===
+# bfc - is a *slightly optimising* brainfuck compiler
 
-bfc is a slightly optimising brainfuck compiler
-
-As an example, the brainfuck code:
+As an example, the following brainfuck code:
 ```brainfuck
 ++++++++[---].
 ```
-would be converted into its equivalent in NASM assembly:
+would be converted by *bfc* into its equivalent in NASM assembly:
 ```nasm
 .section .bss:
-	buffer resb 32768 ; 32kB of tape/memory
+	buffer resb 32768 ; 32k memory cells
 
 section .text:
 global _start
@@ -26,4 +23,18 @@ _start:
 	mov eax,1
 	xor ebx, ebx
 	int 80h
+```
+
+---
+
+installation:
+```bash
+make
+sudo make install
+```
+
+usage:
+```
+# compile hello_world.bf to 'hello_world' with a buffer size of 30000 bytes
+bfc hello_world.bf -b 30000
 ```
