@@ -29,8 +29,7 @@ _start:
 
 installation (linux only):
 ```bash
-make
-sudo make install
+make && sudo make install
 ```
 
 usage:

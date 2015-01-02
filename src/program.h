@@ -18,8 +18,6 @@ typedef struct
 
 typedef Operation (ReduceCallback)(Operation *ops);
 
-Operation *Operation_new(char type, int data);
-
 Program *Program_fromFile(FILE *fp);
 
 void Program_free(Program *p);

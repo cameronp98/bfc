@@ -130,10 +130,13 @@ void Program_reduce(Program *p, const char *pattern, ReduceCallback *cb)
 			// replace the sequence in the program with the result from cb
 			p->data[i] = (*cb)(p->data+i);
 
+			// shift the rest of the program left if necessary
 			if (pat_len > 1)
 			{
-				// fill in the blank space (shift the program left)
-				memmove(p->data+i+1, p->data+i+pat_len, p->size - (i + 1));
+				/* TODO: find out why memcpy breaks the program */
+				for (int k = 0; k < p->size - (i + 1); k++) {
+					p->data[i+1+k] = p->data[i+pat_len+k];
+				}
 
 				p->size -= (pat_len - 1);
 

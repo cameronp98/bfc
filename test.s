@@ -28,32 +28,32 @@ _start:
 	mov ebx,buffer
 
 	mov ax,[ebx]
-	mov bx,2
+	mov bx,3
 	div bx
 	mov byte [ebx],ah
 	cmp byte [ebx],0
 	jz .E2
 
 	.S2:
-	inc byte [ebx]
-	.S2:
-	inc byte [ebx]
+	add byte [ebx],2
+	call putb
 	dec ebx
 	inc byte [ebx]
-	call putb
 mov byte [ebx],1
 	cmp byte [ebx],0
 	jnz .S2
 
 	.E2:
 	cmp byte [ebx],0
-	jnz .S3
+	jz .E4
 
-	.E3:
+	.S4:
+	call putb
+	dec byte [ebx]
 	cmp byte [ebx],0
-	jnz .S2
+	jnz .S4
 
-	.E2:
+	.E4:
 	mov eax,1
 	xor ebx, ebx
 	int 80h
