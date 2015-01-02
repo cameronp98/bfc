@@ -14,10 +14,11 @@ global _start
 _start:
 	mov ebx,buffer
 
-	mov byte ax,8
-	div 3
+	mov ax,8
+	mov bx,3
+	div bx
 	mov byte [ebx],ah
-	call putb ; output one byte
+	call putb
 
 	; return 0
 	mov eax,1
