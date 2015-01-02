@@ -223,6 +223,10 @@ void Program_compile(Program *p, const char *base_path)
 					fprintf(fp, "\tsub ebx,%d\n", op.data);
 				break;
 			case '<':
+				if (op.data == 1)
+					fprintf(fp, "\tinc ebx\n");
+				else
+					fprintf(fp, "\tadd ebx,%d\n", op.data);
 				break;
 			case '[':
 				if (prev_op.type != '+') {
@@ -251,11 +255,11 @@ void Program_compile(Program *p, const char *base_path)
 					fprintf(fp, "mov byte [ebx],%d\n", op.data);
 				} else {
 					if (i > 0 && prev_op.type == '+')
-						fprintf(fp, "\tmov ax,%d\n", prev_op.data);
+						fprintf(fp, "\tmov al,%d\n", prev_op.data);
 					else
-						fprintf(fp, "\tmov ax,[ebx]\n");
-					fprintf(fp, "\tmov dx,%d\n", op.data);
-					fprintf(fp, "\tdiv dx\n");
+						fprintf(fp, "\tmov ax,byte [ebx]\n");
+					fprintf(fp, "\tmov dl,%d\n", op.data);
+					fprintf(fp, "\tdiv dl\n");
 					fprintf(fp, "\tmov byte [ebx],ah\n");
 				}
 				break;
