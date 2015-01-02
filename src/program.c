@@ -63,9 +63,10 @@ Program *Program_fromFile(FILE *fp)
 			case '<':
 			case '>':
 				Program_put(p, c, opcount);
+				break;
 			case '.':
 				while (opcount--) {
-					Program_put(p, c, opcount);
+					Program_put(p, c, 0);
 				}
 				break;
 			case ',':
@@ -219,13 +220,13 @@ void Program_compile(Program *p, const char *base_path)
 				else
 					fprintf(fp, "\tsub byte [ebx],%d\n", op.data);
 				break;
-			case '>':
+			case '<':
 				if (op.data == 1)
 					fprintf(fp, "\tdec ebx\n");
 				else
 					fprintf(fp, "\tsub ebx,%d\n", op.data);
 				break;
-			case '<':
+			case '>':
 				if (op.data == 1)
 					fprintf(fp, "\tinc ebx\n");
 				else
