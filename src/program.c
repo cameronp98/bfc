@@ -195,8 +195,6 @@ void Program_compile(Program *p, const char *base_path)
 	{
 		Operation op = p->data[i];
 
-		printf("%c %d\n", op.type, op.data);
-
 		char next_type = i < (p->size - 1) ? p->data[i + 1].type : -1;
 
 		switch(op.type)
