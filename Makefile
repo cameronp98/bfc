@@ -5,7 +5,7 @@ OBJDIR=obj
 
 CC=gcc
 
-CFLAGS = -O -std=c99 -Wall -g -I $(SRCDIR)
+CFLAGS = -O -std=c99 -Wall
 LFLAGS = -Wall
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)

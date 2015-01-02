@@ -1,13 +1,10 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <stddef.h>
-#include <stdio.h>
+void die(const char *fmt, ...);
 
-void die(char *fmt, ...);
+char *changeExtension(const char *path, const char *ext);
 
-void *bfc_alloc(void *ptr, size_t size);
-
-FILE *bfc_fopen(const char *path, const char *mode);
+int fsystem(const char *fmt, ...);
 
 #endif

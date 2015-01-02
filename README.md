@@ -1,4 +1,4 @@
-# bfc - is a *slightly optimising* brainfuck compiler
+# bfc - a *slightly optimising* brainfuck compiler
 
 As an example, the following brainfuck code:
 ```brainfuck
@@ -27,14 +27,14 @@ _start:
 
 ---
 
-installation:
+installation (linux only):
 ```bash
 make
 sudo make install
 ```
 
 usage:
-```
+```bash
 # compile hello_world.bf to 'hello_world' with a buffer size of 30000 bytes
 bfc hello_world.bf -b 30000
 ```

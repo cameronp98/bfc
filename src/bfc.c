@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 {
 
 	if (argc < 2)
-		die("usage: bfc <input-file> [sb]");
+		die("usage: bfc <input-file> [-sb]");
 
 	char c;
 	while ((c = getopt(argc, argv, "s:b:")) != -1)
@@ -51,10 +51,9 @@ int main(int argc, char **argv)
 
 	Program_reduce(p, "[-]", reduce_remainder);
 
-	for (int i = 0; i < p->size; i++)
-	{
-		printf("%c %d\n", p->data[i].type, p->data[i].data);
-	}
+	char *output_path = changeExtension(argv[1], "");
+	Program_compile(p, output_path);
+	free(output_path);
 
 	Program_free(p);
 

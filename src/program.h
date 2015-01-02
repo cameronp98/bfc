@@ -29,6 +29,8 @@ void Program_free(Program *p);
  * Pass the sequence to `cb` and replace the sequence in the program with the
  *  single operator returned by `cb`
  */
-void Program_reduce(Program *p, char *pattern, ReduceCallback *cb);
+void Program_reduce(Program *p, const char *pattern, ReduceCallback *cb);
+
+void Program_compile(Program *p, const char *output_path);
 
 #endif
