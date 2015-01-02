@@ -35,6 +35,6 @@ make && sudo make install
 
 usage:
 ```bash
-# compile hello_world.bf to 'hello_world' with a buffer size of 30000 bytes
-bfc hello_world.bf -b 30000
+# compile 'examples/hello_world.bf' with a buffer size of 30000 bytes
+bfc examples/hello_world.bf -b 30000
 ```
