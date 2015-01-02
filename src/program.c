@@ -63,7 +63,9 @@ Program *Program_fromFile(FILE *fp)
 			case '<':
 			case '>':
 			case '.':
-				Program_put(p, c, opcount);
+				while (opcount--) {
+					Program_put(p, c, 0);
+				}
 				break;
 			case ',':
 				Program_put(p, c, 0);
