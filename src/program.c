@@ -201,26 +201,26 @@ void Program_compile(Program *p, const char *base_path)
 		{
 			case '+':
 				// save the add value but don't write the command
-				if (next_type == '%')
-					continue;
-				else if (prev_op.type == ']' || prev_op.type == -1)
-					fprintf(fp, "\tmov byte [ebx],%d\n", op.data);
-				else if (op.data > 1)
-					fprintf(fp, "\tadd byte [ebx],%d\n", op.data);
-				else
-					fprintf(fp, "\tinc byte [ebx]\n");
+				if (next_type != '%') {
+					if (prev_op.type == ']' || prev_op.type == -1)
+						fprintf(fp, "\tmov byte [ebx],%d\n", op.data);
+					else if (op.data == 1)
+						fprintf(fp, "\tinc byte [ebx]\n");
+					else
+						fprintf(fp, "\tadd byte [ebx],%d\n", op.data);
+				}
 				break;
 			case '-':
-				if (op.data > 1)
-					fprintf(fp, "\tsub byte [ebx],%d\n", op.data);
-				else
+				if (op.data == 1)
 					fprintf(fp, "\tdec byte [ebx]\n");
+				else
+					fprintf(fp, "\tsub byte [ebx],%d\n", op.data);
 				break;
 			case '>':
-				if (op.data > 1)
-					fprintf(fp, "\tsub ebx,%d\n", op.data);
-				else
+				if (op.data == 1)
 					fprintf(fp, "\tdec ebx\n");
+				else
+					fprintf(fp, "\tsub ebx,%d\n", op.data);
 				break;
 			case '<':
 				break;
