@@ -254,8 +254,8 @@ void Program_compile(Program *p, const char *base_path)
 						fprintf(fp, "\tmov ax,%d\n", prev_op.data);
 					else
 						fprintf(fp, "\tmov ax,[ebx]\n");
-					fprintf(fp, "\tmov bx,%d\n", op.data);
-					fprintf(fp, "\tdiv bx\n");
+					fprintf(fp, "\tmov dx,%d\n", op.data);
+					fprintf(fp, "\tdiv dx\n");
 					fprintf(fp, "\tmov byte [ebx],ah\n");
 				}
 				break;
@@ -266,7 +266,7 @@ void Program_compile(Program *p, const char *base_path)
 	}
 
 	// return 0
-	fprintf(fp, "\tmov eax,1\n");
+	fprintf(fp, "\n\tmov eax,1\n");
 	fprintf(fp, "\txor ebx, ebx\n");
 	fprintf(fp, "\tint 80h\n");
 
