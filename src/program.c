@@ -256,7 +256,7 @@ void Program_compile(Program *p, const char *base_path)
 				break;
 			case '%':
 				if (op.data == 1) {
-					fprintf(fp, "mov byte [ebx],%d\n", op.data);
+					fprintf(fp, "\tmov byte [ebx],0");
 				} else {
 					if (i > 0 && prev_op.type == '+')
 						fprintf(fp, "\tmov al,%d\n", prev_op.data);
