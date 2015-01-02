@@ -14,9 +14,9 @@ global _start
 _start:
 	mov ebx,buffer
 
-	mov ax,8
-	mov bx,3
-	div bx
+	mov al,8
+	mov dl,3
+	div dl
 	mov byte [ebx],ah
 	call putb
 
