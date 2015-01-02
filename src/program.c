@@ -65,7 +65,7 @@ Program *Program_fromFile(FILE *fp)
 				Program_put(p, c, opcount);
 			case '.':
 				while (opcount--) {
-					Program_put(p, c, 0);
+					Program_put(p, c, opcount);
 				}
 				break;
 			case ',':
